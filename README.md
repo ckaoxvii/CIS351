@@ -1,1 +1,1 @@
-Data sets and sample files used in CIS 351.
+Quarto docs from lectures.
