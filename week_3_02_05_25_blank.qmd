@@ -65,3 +65,28 @@ A **vector** is a collection of values (not necessarily of the same type). For t
 `list()` is a actually a different type of object in R.
 :::
 
+**Example 1:** Create a vector consists the numbers 1, 10, 8, 44, pi, e. Check the data type of the vector.
+
+```{r}
+```
+
+**Example 2:** Create a vector consists of 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'. Check the data type of the vector.
+
+```{r}
+```
+
+**Example 3:** Create a vector consists of 1, 44, 'apple', 'orange', pi. Check the data type of the vector.
+
+```{r}
+```
+
+**Example 4:** Create a vector consists of 1, 5, TRUE, FALSE, -9, NA. Check the data type of the vector
+
+```{r}
+```
+
+_**Remark:**_ In general, _vectors can only contain values of a single type._ The hierarchy of the data type is
+ 
+ <p style='text-align:center'>
+**Character > Numeric > Logical**
+ </p>
