@@ -1,0 +1,178 @@
+---
+title: "Week 3 Friday 02/07/2025"
+author: "" 
+format: 
+  html:
+    embed-resources: true
+---
+
+
+```{r}
+#| message: false
+# loading packges
+
+library(tidyverse)
+
+library(janitor)
+```
+
+# Vectors (continued)
+
+## Working with vectors
+
+Rather than working with individual elements in a vector, R allows us to work with all elements simultaneously.
+
+```{r}
+temp_SA <- c(56, 58, 63, 69, 75, 80, 82, 82, 80, 73, 66, 59)
+
+temp_NY <- c(33, 35, 42, 53, 63, 72, 77, 76, 69, 58, 48, 38)
+```
+
+We can perform arithmetic on the entire vector by performing the same operating to the variable name.
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+We can also perform operations involving two vectors, provided that they have the same number of elements.
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+:::{.callout-tip title = 'R Function'}
+The function `length()` tells us the number of elements of a vector.
+:::
+
+```{r}
+```
+
+## Vectorized logical operations
+
+**Question:** Which elements of `temp_NY` are greater than 55?
+
+```{r}
+```
+
+**Exercise:** Which elements of `temp_SA` are not equal to 82?
+
+```{r}
+```
+
+## The `%in%` operator
+
+The `%in%` operator lets us determine whether the first object contains elements in a vector.
+
+**Question:** Are there any elements in `temp_SA` that are equal to 66 or 75?
+```{r}
+```
+
+**Exercise:** Are there any elements in `temp_NY` that are _not_ equal to 53 or 77?
+
+```{r}
+```
+
+## Summary functions for vectors
+
+:::{.callout-tip title = "R Function"}
+* `sum()`: adds up all the elements in a (numeric) vector
+
+* `mean()`: finds the mean value of a numeric vector
+
+* `median()`: finds the median value of a numeric vector
+
+* `sd()`: finds the standard deviation of a numeric vector
+
+* `var()`: finds the variance of a numeric vector
+
+* `min():` finds the minimum value in a vector
+
+* `max():` finds the maximum value in a vector
+:::
+
+```{r}
+```
+
+Internally, R handles `TRUE` and `FALSE` as 1 and 0, respectively.
+
+```{r}
+```
+
+This line of reasoning allows us to perform some summary operations.
+
+**Question:** How many elements in `temp_NY` are less than 40?
+
+```{r}
+```
+
+**Question:** How many elements in `temp_SA` are equal to 80 or 82?
+
+```{r}
+```
+
+**Exercise:** What is the proportion of elements in `temp_NY` that are less than 40?
+
+```{r}
+```
+
+## Defining integer sequences
+
+To create a vector of sequence of consecutive integers, we use the `:` notation. 
+
+```{r}
+```
+
+More generally, if we want to start the sequence with an integer $m$ and end with another integer $n$, then we use the syntax `m:n`. The `:` notation dispenses the need for `c()`.
+
+
+```{r}
+```
+
+## Named vectors
+
+We can assign names to each element of a vector using `names(df)`.
+
+```{r}
+```
+
+## Extracting elements from a vector
+
+R uses the square bracket, `[]`, notation to locate elements in a vector.
+
+
+```{r}
+# print the first element in `temp_SA`
+```
+
+```{r}
+# print the 2nd through the 8th elements in `temp_SA`
+```
+
+```{r}
+# print all but the first element in `temp_SA`
+```
+
+```{r}
+# print all but the 4th element in `temp_SA`
+```
+
+
+```{r}
+# print the 1st, 9th, 10th, 11th, and 12th elements in `temp_SA`
+```
+
+We can also use names of the elements instead of the element index (position).
+
+```{r}
+```
+
+```{r}
+```
