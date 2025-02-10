@@ -1,0 +1,109 @@
+---
+title: "Week 4 Monday 02/10/2025"
+author: "" 
+format: 
+  html:
+    embed-resources: true
+---
+
+
+```{r}
+#| message: false
+# loading packges
+
+library(tidyverse)
+
+library(janitor)
+```
+
+# Vectors (continued)
+
+## Defining Integer Sequences
+
+Suppose you were asked to define a vector `int` that contains the integers 1, 2,..., 10. You might be inclined to defined `int` as
+
+```{r}
+```
+
+This is fine, but what if you were asked to define another vector `int100` that contains the integers 1, 2,..., 100? It is not feasible to type out all the numbers. Fortunately, there is a short hand that allows us to create a vector of consecutive integers using the `:` operator. The syntax for this is `start:stop`.
+
+```{r}
+```
+
+Note that we don't have to begin our vector with 1, it can be any integer.
+
+```{r}
+```
+
+## Bracket Operator
+
+More often than not, we do not work with a large vector (or as we will see later, data frames) directly in R. Instead, we work with particular elements in our vector(s). To achieve this, we use the bracket operator `[]`. The exact syntax is `x[i]`, where `x` is a vector and `i` is the element index (position). This process of extracting a subset from a vector is called **subsetting**.
+
+Using the 2023 average monthly temperatures for St. Augustine and NYC. Find the first and the last elements of each vector.
+
+```{r}
+temp_SA <- c(56, 58, 63, 69, 75, 80, 82, 82, 80, 73, 66, 59)
+
+temp_NY <- c(33, 35, 42, 53, 63, 72, 77, 76, 69, 58, 48, 38)
+```
+
+In the example above, we happen to know the size of each vector, so we are able to identify the last element of each vector with the index of 12. While the variable pane in RStudio will always conveniently display the size of a vector defined by us, there is a much more general way to find the last element of a vector without us knowing the size of the vector. To achieve this, recall that `length(x)` gives us the size of the vector `x`. Therefore `x[length(x)]` will produce the last element in `x` for us.
+
+```{r}
+```
+
+Now, what if you were asked to extract the first and last elements of `temp_SA` at the same time? 
+
+```{r}
+```
+
+**Exercise:** Extract the 1st, 5th, and 11th elements of `temp_NY`.
+
+```{r}
+```
+
+The complement operation of extracting an element/elements from a vector is to _remove_ an element/elements from a vector. The syntax of removing the $i$th element from a vector `x` is `x[-i]`.
+
+```{r}
+# removing the 8th element from `temp_SA`
+```
+Compare this with `temp_SA[c(1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12)]`. 
+
+**Exercise:** Remove the 2nd, 4th, 8th, 9th elements from `temp_NY`.
+
+```{r}
+```
+
+## Logical Subsetting
+
+In real life, we don't often know the exact positions of elements that we want to subset (probably because the vectors will be too large for us to comb through element by element). Instead, we can exploit logical operations to help us subset the desired elements.
+
+The code below is the logical operation that identify the elements in `temp_SA` that are less than or equal to 70.
+
+```{r}
+```
+
+And the output is a vector of truth values. Recall that this output is very inconvenient to use at best since we need to match the truth value to each element to identify the elements that are $\leq 70$. However, we can pass this vector of truth values through the `[]` operator to return the elements in `temp_SA` that are $\leq 70$.
+
+```{r}
+```
+
+Using a logical operation to subset a vector is called **logical subsetting**. 
+
+**Exercise:** Which elements in `temp_NY` are great than 50 but less than or equal 72?
+
+```{r}
+```
+
+**Exercise:** Which elements in `temp_NY` are greater than 72 _or_ less than or equal to 50?
+
+```{r}
+```
+
+The words "and" and "or" are called **logical conjunctions**. They are used to connect two propositions. In math/logic/coding, the conjuction "or" is not meant to be an exclusive or. This means that if we have a statement $A \text{ or } B$, then either $A$ is true, or $B$ is true, or $A$ _and_ $B$ are both true. In English, when we say "it is sunny or it is cloudy." We typically mean that "it is sunny" or "it is cloudy", but not both. This is an **exclusive or**, denoted by xor. While the example above list values that either are $> 72$ xor $\leqslant 50$, we will later encounter data frames that have values satisfy both parts of an 'or' statement.
+
+:::{.column-margin}
+A **proposition** in logic is a declarative statement that is either true or false.
+:::
+
+Sorry if your brain hurts.
