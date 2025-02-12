@@ -1,0 +1,126 @@
+---
+title: "Week 4 Wednesday 02/12/2025"
+author: "" 
+format: 
+  html:
+    embed-resources: true
+---
+
+
+```{r}
+#| message: false
+# loading packges
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+```
+
+# Vectors (continued)
+
+## Factors
+
+Let us consider the vector `days` defined below and sort the vector using `sort()`.
+
+```{r}
+```
+
+Yikes, not so good. `sort()` sorted the elements alphabetically. While this manner of sorting is preferred most of the time, there are lists that are not ordered alphabetically, like the weekdays.
+
+We can overcome this problem by converting `days` into a factor. A factor is a character varaible with an extra property that you can impose how you want the levels to be ordered. The syntax of converting a (character) vector into a factor is `factor(x, levels =  c())`
+
+```{r}
+```
+
+Also, note what is the difference (beside the ordering) in outputs between `sort(days)` and `sort(days_factor)`?
+
+# Data Frames
+
+A **data frame** is a structure that is a generalization of a vector. Whereas a vector is a one-dimensional object, a data frame can be a two-dimensional object. We use the function `data.frame()` to create a data frame from a collection of vectors.
+
+```{r}
+```
+
+It is always a good idea to apply `class()` to a new type of object.
+
+```{r}
+```
+
+We can use `str()` to get details of the data frame.
+
+```{r}
+```
+
+There are three ways to extract column(s) from a data frame. 
+
+1. the `[]` operator
+2. the `$` operator
+3. the `select()` function (part of `tidyverse`)
+
+```{r}
+# extract the `id` column from `df`
+```
+
+```{r}
+# extract the 2nd column from `df`
+```
+
+```{r}
+# extract the 2nd and 3rd columns from `df`
+```
+
+```{r}
+# extract the `age` and `name` columns from `df`
+```
+
+```{r}
+# extract the `age` column from `df`
+```
+
+```{r}
+```
+
+```{r}
+```
+
+Let's use a real data frame: the `penguins` data frame from `{palmerpenguins}` package.
+
+```{r}
+```
+
+We often deal with very large data frames where it is not immediately clear what are the columns. To see the list of column names, we use `names()`.
+
+```{r}
+```
+
+```{r}
+# check variable type of the columns
+```
+
+Similar to `names()`, there are many R functions that will help us understand our data frames better. One such function is `unique()`. It allows us to see how many unique values there are in a column. For example, suppose we wish to know what are the species in the `species` column.
+
+```{r}
+```
+
+**Exercise** How many distinct islands are there in the `penguins` data frame?
+
+```{r}
+```
+
+Now that we know how to get to know our data frame, let's talk about summary values of the columns. 
+
+**Question:** What is the mean body mass of `penguins`?
+
+```{r}
+```
+The code returns `NA` because the `body_mass_g` has at least one `NA`. To remedy this, we add an **optional argument** in the `mean()` function that removes the `NA`s for us.
+
+```{r}
+```
+
+**Exercise:** Find the standard deviation of `penguins`'s flipper length.
+
+```{r}
+```
