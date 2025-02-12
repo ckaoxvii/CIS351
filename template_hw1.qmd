@@ -1,0 +1,19 @@
+---
+title: "CIS 351 Assignment 1"
+format:
+  html: 
+    embed-resources: true
+---
+
+**Question 1.** Load the `tidyverse` and `janitor` packages.
+```{r}
+library(tidyverse)
+
+library(janitor)
+```
+
+**Question 2.** Load the *Carbon Dioxide Uptake in Grass Plants* data by running `CO2` in an R code chunk.
+
+```{r}
+CO2
+```
