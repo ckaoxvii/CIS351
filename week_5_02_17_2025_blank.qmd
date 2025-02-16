@@ -1,0 +1,126 @@
+---
+title: "Week 5 Monday 02/17/2025"
+author: "" 
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+# loading packges
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+```
+
+## The tidy data principle
+
+Given a dataset, we can often represent it in multiple ways. Suppose you are given a dataset that contains the number (in millions) of EVs sold in the US and Europe from 2017 through 2024 and you were asked to input this into a spreadsheet. You are likly to do the following
+
+|        |      |      |      |      |      |      |      |      |
+|--------|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
+|        | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 |
+| US     | 0.2  | 0.4  | 0.3  | 0.3  | 0.6  | 1.0  | 1.4  | 1.7  |
+| Europe | 0.3  | 0.4  | 0.6  | 1.4  | 2.3  | 2.7  | 3.2  | 3.4  |
+
+: Table 1: Number of Electric Vehicles Sold in US and Europe from 2017 to 2024.
+
+This is because we can read and process data more quickly when the information is arranged horizontally. However this is not the ideal way to represent data in a tabular form. When working in R, we want our data to be constructed or reshaped into the **tidy format**. A dataset is in **tidy** if
+
+1.  Each variable is a column; each column is a variable.
+2.  Each observation is a row; each row is an observation.
+3.  Each value is a cell; each cell is a single value.
+
+These rules can be visualized as follows.
+
+![Source: R for Data Science (2e)](https://r4ds.hadley.nz/images/tidy-1.png){fig-align="center"}
+
+Table 1 is not in tidy format because it violates rules 1 and 2 of the tidy data principles. More specifically, rule 1 is violated because columns 2 through 9 contain data for the same variable. Additionally, rows 1 and 2 contain multiple years of observations, thus violates rule 2.
+
+The tidy form of the dataset should look like
+
+|          |      |         |
+|:--------:|:----:|:-------:|
+| Location | Year | EV Sold |
+|    US    | 2017 |   0.2   |
+|    US    | 2018 |   0.4   |
+|    US    | 2019 |   0.3   |
+|    US    | 2020 |   0.3   |
+|    US    | 2021 |   0.6   |
+|    US    | 2022 |   1.0   |
+|    US    | 2023 |   1.4   |
+|    US    | 2024 |   1.7   |
+|  Europe  | 2017 |   0.3   |
+|  Europe  | 2018 |   0.4   |
+|  Europe  | 2019 |   0.6   |
+|  Europe  | 2020 |   1.4   |
+|  Europe  | 2021 |   2.3   |
+|  Europe  | 2022 |   2.7   |
+|  Europe  | 2023 |   3.2   |
+|  Europe  | 2024 |   3.4   |
+
+There are two major advantages to keep datasets in tidy format.
+
+1. There is uniformity in how data is presented, which minimizes inconsistencies and ambiguity in data presentation. 
+
+2. By keeping each variable in the same column, R can *vectorize* certain operations. In other words, operations can be performed on entire columns by simply referencing their names in a function or operation.
+
+## Data wrangling using `{tidyverse}`
+
+Base R contains many functions that allow you to extract information and reshape your data. However, the `{dplyr}` package, part of the `{tidyverse}` meta-package, takes these operations to the next level.
+
+### Review: the function composition operator $\circ$
+
+In mathematics, the composition operator $\circ$ takes two functions $f$ and $g$ and returns a new function $(g \circ f)(x)$, defined as 
+$$
+  (g \circ f)(x) = g(f(x)).
+$$ 
+Recall that in the function composition notation, we reach from *right to left* as the right-hand size of the equality shows: we first evaluate $f(x)$, then apply $g$ to obtain $g(f(x))$.
+
+In more advanced mathematics, compositions are often expressed via the **arrow diagram**. The advantage of the arrow diagram is that it directs the reader the order of operations. For example, the composition $g(f(x))$ is visualized as 
+$$
+  x \overset{f}{\longrightarrow} f(x) \overset{g}{\longrightarrow} g(f(x))
+$$
+
+*Note.* We are using the arrow diagram here as a way to visualize the abstract idea of function composition. More work is required to define the arrow diagram precisely and we will not do that here.
+
+**Example 0.** Let $f(x) = x^2$ and $g(x) = \log(x)$. Find $(g \circ f)(x)$ using the arrow diagram.
+
+*Solution.* 
+$$
+  x \overset{x^2}{\longrightarrow} x^2 \overset{\log(x)}{\longrightarrow} \log(x^2)
+$$
+
+### The pipe operator `|>`
+
+When working with data frames, we often need to perform multiple operations to obtain the desired results. Similar to function composition, traditional function composition notation can quickly become unwieldy, making it difficult for both coders and readers to track operations in the correct order. 
+
+The pipe operator takes the main idea behind the arrow diagram of function composition, where the pipe operator `|>` represents the $\rightarrow$ in the arrow diagram.
+
+Suppose, for example, we want to determine the unique penguin species in the `penguins` dataframe. The order of operations is as follows.
+
+1. Start with the `penguins` dataset.
+2. Select the `species` column.
+3. Identify the unique values in the `species` column.
+
+Without using the pipe operator, we can do this in one of two ways.
+
+```{r}
+```
+
+```{r}
+```
+In either case, we read the order of operations from insdie out, but we write the code from *outside in*. Now, imagine that we have 3 or more operations (which we most definitely will have later on in the course).
+
+With the pipe operator, the order of operation is less confusing.
+
+```{r}
+```
+
+**Exercise 1.** Determine the unique islands in `penguins` dataset.
+
+**Exercise 2.** Determine the unique genders in `penguins` dataset.
