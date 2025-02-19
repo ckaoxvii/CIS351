@@ -1,0 +1,82 @@
+---
+title: "Week 5 Wednesday 02/19/2025"
+author: "" 
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+# loading packges
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+
+library(gapminder)
+```
+
+## `{dplyr}` functions
+
+The `{dplyr}` package contains functions that allows us to work with data frames more easily. The main `{dplyr}` functions are
+
+* `select()`: extract column(s) from your data frame
+* `filter()`: filter rows of your data based on a condition/conditions
+* `mutate()`: create new columns or modify exiting columns in your data frame
+* `summarize()`: aggregate information in your columns
+
+There are other `{dplyr}` functions we will introduce throughout the semester, but the above four functions are the most frequently used when working with data frames.
+
+### `select()`
+
+We have seen and used `select()` before. It allows us to extract columns we want to work with. To remove a column/columns, we can put a `-` symbol in front of the column name.
+
+**Example 1.** Select the temperature, month, and day columns from `airquality` dataset. 
+
+```{r}
+```
+
+**Example 2.** Remove the depth and stations columns from `quakes` dataset.
+
+```{r}
+```
+
+### Rename columns
+
+* `select()`: 
+
+```{r}
+```
+
+* `rename()`
+
+```{r}
+```
+
+### `filter()`
+
+The `filter()` function lets you filter specific rows based on logical operation(s) on column(s).
+
+**Example 3:** Subset out the data in `gapminder` where the country is Australia.
+
+```{r}
+```
+
+**Example 4:** From `gapminder`, subset out the Australian data after 1980.
+
+```{r}
+```
+
+**Exercise 1:** From `gapminder`, find the life expectancy data on the US and Egypt post 1990.
+
+```{r}
+```
+
+**Exercise 2:** From `penguins`, find the body mass of the Chinstrap penguins from either Dream or Biscoe Island.
+
+```{r}
+
+```
