@@ -1,0 +1,48 @@
+---
+title: "Week 5 Friday 02/21/2025"
+author: "" 
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+# loading packges
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+
+library(gapminder)
+```
+
+## Adding and modifying columns using `mutate()` 
+
+`mutate()` allows us to redefine or create new columns based on existing columns in your dataframe.
+
+**Example 1.** In `penguins` dataframe, convert the flipper length to inches.
+```{r}
+
+```
+
+**Exercise 1.** In `penguins` dataframe, convert the body mass to pounds.
+
+```{r}
+
+```
+
+A *very* useful function to go with `mutate()` is `case_when()`. `case_when()` gives you the ability to define values based on logical operations.
+
+**Example 2.** In `gapminder` dataframe, filter out all countries in the Americas and label them by North, Central, or South America.
+```{r}
+
+```
+
+**Exericse 2.** In `starwars` dataframe, convert the the heights of characters to feet and create a new column named `height_2` where a character whose height is greater than 180 cm is 'tall', between 160 and 180 is 'medium', less than 160 is short.
+
+```{r}
+
+```
