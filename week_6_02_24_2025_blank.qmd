@@ -1,5 +1,5 @@
 ---
-title: "Week 5 Friday 02/21/2025"
+title: "Week 6 Monday 02/24/2025"
 author: "" 
 format: 
   html:
@@ -24,6 +24,15 @@ library(gapminder)
 We have encountered summary functions such as `mean()` and `sd()` while discussing vectors. One can similarly extend the use of summary functions to data frames via the `summarize()` function. More specifically, we can find summary statistics of specific column(s) in a data frame without needing to subset those columns.
 
 **Example 1.** Find the mean height of all characters in `starwars`.
+
+```{r}
+```
+
+### Use `is.na()` to detect `NA`s and count the number of `NA`s in a column.
+
+When we pass a column through the `is.na()` function, R returns `TRUE` is an entry is `NA`, `FALSE` if it is not `NA`. Futhermore, since R processes `TRUE` and `FALSE` as 1 and 0, respectively, we can capitalize this by using `sum()` to get the number of `NA`s in a column.
+
+**Example 1.2.** Determine whether `starwars$mass` containes any `NA`, if so, how many `NA`s are in the column.
 
 ```{r}
 ```
