@@ -1,0 +1,62 @@
+---
+title: "Week 5 Friday 02/21/2025"
+author: "" 
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+# loading packges
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+
+library(gapminder)
+```
+
+## Summarizing data using `summarize()`
+
+We have encountered summary functions such as `mean()` and `sd()` while discussing vectors. One can similarly extend the use of summary functions to data frames via the `summarize()` function. More specifically, we can find summary statistics of specific column(s) in a data frame without needing to subset those columns.
+
+**Example 1.** Find the mean height of all characters in `starwars`.
+
+```{r}
+```
+
+**Example 2.** Find the median and the maximum flipper lengths in `penguins`.
+
+```{r}
+
+```
+
+**Exericse 1.** Find the mean and median ozone  of `airquality` dataset.
+
+```{r}
+
+```
+
+### Summarizing data by groups
+
+More often than not, we are interested in summary data of groups within a dataset. This will allow us to compare data between different groups.
+
+**Example 3.** Find the mean body mass of `penguins` by species.
+
+```{r}
+```
+
+**Example 4.** Find the mean ozone of `airquality` by month.
+
+```{r}
+
+```
+
+**Exercise 2.** Find the mean GDP per capita of the Americas in `gapminder`.
+
+```{r}
+
+```
