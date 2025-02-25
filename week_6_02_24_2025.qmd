@@ -1,0 +1,145 @@
+---
+title: "Week 6 Monday 02/24/2025"
+author: "" 
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+# loading packages
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+
+library(gapminder)
+```
+
+## Summarizing data using `summarize()`
+
+We have encountered summary functions such as `mean()` and `sd()` while discussing vectors. One can similarly extend the use of summary functions to data frames via the `summarize()` function. More specifically, we can find summary statistics of specific column(s) in a data frame without needing to subset those columns.
+
+**Example 1.** Find the mean height of all characters in `starwars`.
+
+```{r}
+names(starwars)
+
+starwars_mean_height <- starwars |> 
+  summarize(
+    mean_height = round(mean(height, na.rm = TRUE), 2)
+  )
+
+starwars_mean_height
+```
+
+### Use `is.na()` to detect `NA`s and count the number of `NA`s in a column.
+
+When we pass a column through the `is.na()` function, R returns `TRUE` is an entry is `NA`, `FALSE` if it is not `NA`. Futhermore, since R processes `TRUE` and `FALSE` as 1 and 0, respectively, we can capitalize this by using `sum()` to get the number of `NA`s in a column.
+
+**Example 1.2.** Determine whether `starwars$mass` containes any `NA`, if so, how many `NA`s are in the column.
+
+Note that by passing the `mass` column to `is.na()`, R returns a vector of `TRUE` and `FALSE` values.
+```{r}
+is.na(starwars$mass)
+```
+If we further pass `is.na(starwars$mass)` to `sum()`, then R will count the number of `NA`s in the `mass` column.
+```{r}
+sum(is.na(starwars$mass))
+```
+In general, the following snippet of R code count the number of `NA` values in a specified column, assuming that the correct names for the data frame and column are provided.
+
+```{r}
+count_NAs <- starwars |> 
+  summarize(
+    NA_count = case_when(
+      sum(is.na(mass)) == 0 ~ 'No NAs',
+      TRUE ~ paste(as.character(sum(is.na(mass))), 'NAs')
+    )
+  )
+```
+A quick explanation on the second case of `case_when()`. As shown above, `sum(is.na(mass))` is the number of `NA` values in `mass` column. Recall from earlier in the semester that `as.character()` is a function that converts its argument to characters. Thus `as.character(sum(is.na(mass)))` counts the number of `NA`s then converts the value to a character value. Lastly, the `paste()` function is used to "glue" multiple character strings together. In this instance, the two strings are `as.character(sum(is.na(mass)))` and 'NAs'.
+
+**Example 2.** Find the median and the maximum flipper lengths in `penguins`.
+
+```{r}
+names(penguins)
+
+flipper_length_sum <- penguins |> 
+  summarize(
+    median_FL = round(median(flipper_length_mm, na.rm = TRUE), 2),
+    max_FL = max(flipper_length_mm, na.rm = TRUE)
+  )
+
+flipper_length_sum
+```
+
+**Exercise 1.** Find the mean and median ozone  of `airquality` dataset.
+
+```{r}
+names(airquality)
+
+# column names are not in lower snake form; pass it to `clean_names()`
+df_airquality <- airquality |> 
+  clean_names()
+
+ozone_sum <- df_airquality |> 
+  summarize(
+    mean_ozone = round(mean(ozone, na.rm = TRUE), 2),
+    median_ozone = round(median(ozone, na.rm = TRUE), 2)
+  )
+
+ozone_sum
+```
+
+*Question:* Based on the mean and median ozone levels, can you make an educated guess about the shape of the ozone level distribution?
+
+### Summarizing data by groups
+
+More often than not, we are interested in summary data of groups within a dataset. This will allow us to compare data between different groups.
+
+**Example 3.** Find the mean body mass of `penguins` by species.
+
+```{r}
+mean_BM_species <- penguins |> 
+  summarize(
+    mean_BM = round(mean(body_mass_g, na.rm = TRUE), 2),
+    .by = species
+  )
+
+mean_BM_species
+```
+
+**Example 4.** Find the mean ozone of `airquality` by month.
+
+```{r}
+mean_ozone_month <- df_airquality |> 
+  summarize(
+    mean_ozone = round(mean(ozone, na.rm = TRUE), 2),
+    .by = month
+  )
+
+mean_ozone_month
+```
+
+**Exercise 2.** Find the mean GDP per capita for countries in the Americas using `gapminder`.
+
+Before we can find the mean GDP per captia by country, we need to first subset out those countries in Americas.
+```{r}
+names(gapminder)
+
+df_gapminder <- gapminder |> 
+  clean_names()
+
+mean_gdp <- df_gapminder |> 
+  filter(continent == 'Americas') |> 
+  summarize(
+    mean_GDP = round(mean(gdp_percap, na.rm = TRUE), 2),
+    .by = country
+  )
+
+mean_gdp
+```
