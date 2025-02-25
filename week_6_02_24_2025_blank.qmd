@@ -8,7 +8,7 @@ format:
 
 ```{r}
 #| message: false
-# loading packges
+# loading packages
 
 library(tidyverse)
 
@@ -43,7 +43,7 @@ When we pass a column through the `is.na()` function, R returns `TRUE` is an ent
 
 ```
 
-**Exericse 1.** Find the mean and median ozone  of `airquality` dataset.
+**Exercise 1.** Find the mean and median ozone  of `airquality` dataset.
 
 ```{r}
 
@@ -64,7 +64,7 @@ More often than not, we are interested in summary data of groups within a datase
 
 ```
 
-**Exercise 2.** Find the mean GDP per capita of the Americas in `gapminder`.
+**Exercise 2.** Find the mean GDP per capita for the countries in the Americas using `gapminder`.
 
 ```{r}
 
