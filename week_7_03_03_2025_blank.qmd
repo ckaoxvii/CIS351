@@ -1,0 +1,67 @@
+---
+title: "Week 7 Monday 03/03/2025"
+author: "" 
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+# loading packages
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+
+library(gapminder)
+```
+
+## Grouped operations in `mutate()`
+
+Perviously, we discussed that `.by` can be an useful optional argument for `summarize()`. In fact, `summarize()` is not the only `dplyr` function has this optional argument. 
+
+**Example 1.** Find the mean flipper length of penguins by species and gender. Create a new column that shows the difference between the observed flipper length and the mean flipper length.
+
+_Solution._ `summarize()` is not entirely useful in this case, because it creates a new table with no original data from `penguins`. Instead, we will create a new column, `mean_fl`, then find the desired differences.
+
+
+```{r}
+
+```
+
+**Exercise 1.** Repeat Example 1 for body mass.
+
+## Reshaping data using `pivot_wider()` and `pivot_longer()`
+
+Recall that data that is easy for human to read is not necessarily the best format for doing data analysis in R, and vice versa. But we do need to have the ability to transform our data from one format to another.
+
+**Example 2.** Covert `fish_encounters` from long format to wide format by station.
+
+```{r}
+
+```
+
+One can similarly reshape a dataframe from wide to long format.
+
+**Example 3.** Reshape `fish_encounters_wide` back into long format.
+
+```{r}
+
+```
+
+**Exercise 2.** Run the code chunk below to download data on forest area as a percent of total land area for each country. Answer the following quesetions.
+
+(a) Can the dataframe be used as is? If not, what are the steps you need to take to clean your data?
+
+(b) Reshape the data into long format (call it `forest_2`), where the new dataframe should have only three columns: country name, year, and percent of total land area that is forest.
+
+(c) Reshape `forest_2` to `forest_3`, where `forest_3` is in wide format. What should the new columns be? How does it compare with `forest`?
+
+```{r}
+#| message: false
+ 
+forest <- read_csv('https://raw.githubusercontent.com/ckaoxvii/CIS351/refs/heads/main/pct_forest_world.csv')
+```
