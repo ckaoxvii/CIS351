@@ -65,3 +65,69 @@ One can similarly reshape a dataframe from wide to long format.
  
 forest <- read_csv('https://raw.githubusercontent.com/ckaoxvii/CIS351/refs/heads/main/pct_forest_world.csv')
 ```
+
+## Counting things with `n_distinct()`, `count()`, and `tabyl()`.
+
+So far, we have seen how `unique()` can be used to count the number of distinct items within a group. However, `unique()` does more than just return a count—it also provides a list of distinct items in the group. This can be problematic when we only need a numeric value, such as when calculating the proportion of each value within the entire group.
+
+**Example 4.** Count the number of distinct companies in `plastics` dataset.
+```{r}
+#| message: false
+
+plastics <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-01-26/plastics.csv')
+```
+
+_Solution._ First, we use `unique()` to count distinct values.
+
+```{r}
+
+```
+
+Uh oh... there are *a lot* of companies here and R is making do math to get the answer we want. In general, we want to avoid this kind of indirect calculation, especially if it involves human to perform some operations. This is because (a) we are prone to make mistakes, and (b) your quarto document is no longer 100% reproducible by someone else. 
+
+Using `n_distinct()` inside of `summarize()` can help us avoid this problem.
+```{r}
+
+```
+
+To count distinct values within a group, we just need to add the option `.by` inside of `summarize()`.
+
+**Example 5.** Count the number of distinct companies within each country.
+
+*Method 1.*
+```{r}
+
+```
+
+*Method 2.*
+```{r}
+
+```
+
+**Exercise 3.** Methods 1 and 2 should give us the same answer. Is this the case? If not, why not?
+
+### Create one-way and two-way tables using `tabyl()`. 
+
+**Example 6.** Use `tabyl()` to create a frequency table of taxonomic codes from `lemurs` dataset.
+
+```{r}
+#| message: false
+
+lemurs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-08-24/lemur_data.csv')
+```
+
+
+```{r}
+
+```
+
+**Example 7** Use `tabyl()` to create a two-way (or contingency) table of taxonomic codes by gender.
+
+```{r}
+
+```
+
+We can add percentages to a two-way table also.
+```{r}
+
+```
