@@ -29,5 +29,19 @@ bats <- read_csv("https://raw.githubusercontent.com/ckaoxvii/CIS351/refs/heads/m
 
 geo <- read_csv("https://raw.githubusercontent.com/ckaoxvii/CIS351/refs/heads/main/Geo_data.csv")
 
-weather <- read_csv("https://github.com/ckaoxvii/CIS351/blob/main/Weather_vars.csv")
+weather <- read_csv("https://raw.githubusercontent.com/ckaoxvii/CIS351/refs/heads/main/Weather_vars.csv")
 ```
+
+**Example 1.** Clean the above 3 dataframes. Select site, date, foraging, and activity from `bats`.
+
+```{r}
+
+```
+
+**Example 2.** Add latitudinal and longitudinal information to `bats`.
+
+```{r}
+
+```
+
+**Exercise 1.** Add mean temperature and mean humidity to the dataframe from Example 2.
