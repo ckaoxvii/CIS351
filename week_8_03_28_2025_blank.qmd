@@ -1,0 +1,70 @@
+---
+title: "Week 8 Fri 03/28/2025"
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+```
+
+## Box Plots in Base R and `{ggplot2}`
+
+**Example 1.** Create a box plot of penguins' body mass in Base R and `{ggplot2}`.
+
+_Base R._
+
+```{r}
+
+```
+
+_`{ggplot2}`_
+
+```{r}
+
+```
+
+**Example 2.** Repeat Example 1, but a box per species.
+
+_Base R._
+
+```{r}
+
+```
+
+_`{ggplot2}`_
+
+```{r}
+
+```
+
+```{r}
+```
+
+```{r}
+```
+
+### Box plots with points
+
+```{r}
+```
+
+```{r}
+
+```
+
+### Box plots with multiple groups
+
+**Example 2.** Create penguins' body mass by species and by gender.
+
+```{r}
+
+```
+
