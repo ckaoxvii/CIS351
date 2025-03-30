@@ -1,0 +1,85 @@
+---
+title: "CIS 351 Week 9 Monday 03/31/2025"
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+
+library(ggpubr)
+```
+
+## Bar Plots with Error Bars
+
+**Example 1.** Create a bar plot of penguins' mean body mass by species with error bars.
+
+```{r}
+
+```
+
+## Interlude: Why Data Visualizations?
+
+Data visualizations serve a higher purpose than just pretty charts and diagrams. They provide deeper insights to our data that summary values do not tell us.
+
+### Problems with relying on summary values
+
+**Example 2.** Import the animals weights data using the snippet provided in the code chunk. Compute the mean weights of each group of animals, then plot the weights by group.
+
+```{r}
+#| message: false
+ 
+animals <- read.csv("https://raw.githubusercontent.com/ckaoxvii/CIS351/refs/heads/main/animal_weights.csv")
+
+```
+
+```{r}
+
+```
+
+The following is a more extreme example, but it hits harder on the importance of data visualization. Examine the data `datasaurus` from the course github page and find the mean and standard deviation of the $x$-and $y$-values for each group.
+
+```{r}
+#| message: false
+ 
+datasauras <- read_csv("https://raw.githubusercontent.com/ckaoxvii/CIS351/refs/heads/main/datasauras.csv")
+
+```
+
+```{r}
+
+```
+
+
+```{r datasets, fig.height=12, fig.width=9}
+
+```
+
+## Scatter plots
+
+Scatter plots are typically used to illustrate relationship between two continuous variables.
+
+**Example 3.** Create a scatter plot of penguins flipper length vs body mass.
+
+```{r}
+
+```
+
+**Example 4.** Repeat Example 3, except coloring the points by species.
+
+```{r}
+
+```
+
+**Example 5.** Create a grouped scatter plot, where each species has its own plot.
+
+```{r}
+
+```
