@@ -1,0 +1,35 @@
+---
+title: "CIS 351 Week 9 Wednesday 04/02/2025"
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+```
+
+## Line Graph in `{ggplot2}`
+
+**Example 1.** Create a line graph of the monthly mean tempeature.
+```{r}
+
+```
+
+```{r}
+
+```
+
+## Line Graph by Group
+
+**Example 2.** From `airquality`, plot the daily temperature for July and August.
+
+```{r}
+
+```
