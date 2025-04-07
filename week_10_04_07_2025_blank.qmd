@@ -39,11 +39,29 @@ $$
 $$
 H_A: 
 $$
-Next, we should visualize the boxplots for the body mass distribution by gender.
+Next, we should visualize the boxplot for the body mass distribution by gender.
 
 ```{r}
 ```
-To perfrom the $t$-test, we use the `t.test()` function.
+To perform the $t$-test, we use the `t.test()` function.
 
 ```{r}
+```
+
+**Example 2.** From `airquality`, use the $t$-test to determine whether the mean ozone level for August is greater than the mean ozone level for May.
+
+$$
+H_0: \mu_M = \mu_A
+$$
+$$
+H_A: \mu_M < \mu_A
+$$
+
+```{r}
+
+```
+
+
+```{r}
+
 ```
