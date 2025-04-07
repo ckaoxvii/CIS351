@@ -1,0 +1,137 @@
+---
+title: "CIS 351 Week 10 Monday 04/07/2025"
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+```
+
+## $t$-Test
+
+$t$-test is one of the most commonly used inferential test. There are three types of $t$-test: one-sample $t$-test, two-sample $t$-test, and paired $t$-test. We will focus on the two-sample $t$-test as it is the most frequently used out of the three.
+
+Generally speaking, the two-sample $t$-test is determine whether there is a difference between the mean value between two different groups.
+
+The hypotheses for a two-sample $t$-test are $$
+H_0: \mu_1 = \mu_2
+$$ $$
+H_A: \mu_1 \ne \mu_2
+$$ In the above, $\mu_1$ and $\mu_2$ are the means of groups 1 and 2. The inequality in $H_A$ indicates that this is a two-tailed test. We can also perform the $t$-test with $<$ or $>$ in $H_A$; these would turn the $t$-test into a one-tailed test.
+
+**Example 1.** Use the $t$-test to determine whether there is a difference between the body mass of penguins by gender.
+
+Let $\mu_M$ and $\mu_F$ denote the mean body mass of the male and female penguins, respectively. The hypotheses are $$
+H_0: \mu_M = \mu_F
+$$ $$
+H_A: \mu_M \ne \mu_F
+$$ Next, we should visualize the boxplot for the body mass distribution by gender.
+
+```{r}
+penguins_1 <- penguins |> 
+  filter(!is.na(sex))
+
+penguins_1 |> 
+  ggplot(
+    aes(
+      x = sex,
+      y = body_mass_g,
+      color = sex
+    )
+  ) + 
+  geom_boxplot() +
+  theme_bw() +
+  stat_summary(
+    fun = mean,
+    fun.min = mean,
+    fun.max = mean,
+    geom = 'errorbar',
+    color = 'black',
+    width = 0.75,
+    linewidth = 1.2
+  ) +
+  labs(
+    title = 'Body Mass Distribution by Gender',
+    x = 'Gender',
+    y = 'Body Mass (g)'
+  )
+```
+
+To perform the $t$-test, we use the `t.test()` function.
+
+```{r}
+t.test(
+  body_mass_g ~ sex,
+  data = penguins_1
+)
+```
+
+Since the $p$-value is $p = 4.794 \times 10^{-16} < 0.05$, we reject the $H_0$ and conclude that the mean body mass for the penguins are different by gender.
+
+**Example 2.** From `airquality`, perform the $t$-test to determine whether the mean ozone level for May is lower than the mean ozone level for August.
+
+```{r}
+airquality_1 <- airquality |> 
+  clean_names() |> 
+  filter(
+    !is.na(ozone),
+    month %in% c(5, 8)
+  ) |> 
+  mutate(
+    month = case_when(
+      month == 5 ~ 'May',
+      month == 8 ~ 'August'
+    )
+  )
+
+airquality_1 |> 
+  ggplot(
+    aes(
+      x = month,
+      y = ozone,
+      color = month
+    )
+  ) +
+  geom_boxplot() +
+  theme_bw() +
+  stat_summary(
+    fun = mean,
+    fun.min = mean,
+    fun.max = mean,
+    geom = 'errorbar',
+    color = 'black',
+    width = 0.75,
+    linewidth = 1.2
+  ) +
+  labs(
+    title = 'Ozone Levels in May and August',
+    x = 'Month',
+    y = 'Ozone Level'
+  )
+```
+
+$$
+H_0: \mu_M = \mu_A
+$$
+
+$$
+H_A: \mu_M < \mu_A
+$$
+
+```{r}
+t.test(
+  ozone ~ month,
+  data = airquality_1,
+  alternative = 'greater' #alphabetically, August comes before May
+)
+```
+
+With a $p$-value of $p = 0.0001084 < 0.05$, we reject $H_0$ and conclude that the mean ozone level for May is lower than the mean ozone level for August.
