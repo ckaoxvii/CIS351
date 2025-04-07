@@ -1,0 +1,49 @@
+---
+title: "CIS 351 Week 10 Monday 04/07/2025"
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+```
+
+## $t$-Test
+
+$t$-test is one of the most commonly used inferential test. There are three types of $t$-test: one-sample $t$-test, two-sample $t$-test, and paired $t$-test. We will focus on the two-sample $t$-test as it is the most frequently used out of the three.
+
+Generally speaking, the two-sample $t$-test is determine whether there is a difference between the mean value between two different groups. 
+
+The hypotheses for a two-sample $t$-test are
+$$
+H_0: \mu_1 = \mu_2
+$$
+$$
+H_A: \mu_1 \ne \mu_2
+$$
+In the above, $\mu_1$ and $\mu_2$ are the means of groups 1 and 2. The inequality in $H_A$ indicates that this is a two-tailed test. We can also perform the $t$-test with $<$ or $>$ in $H_A$; these would turn the $t$-test into a one-tailed test.
+
+**Example 1.** Use the $t$-test to determine whether there is a difference between the body mass of penguins by gender.
+
+Let $\mu_M$ and $\mu_F$ denote the mean body mass of the male and female penguins, respectively. The hypotheses are
+$$
+H_0: 
+$$
+$$
+H_A: 
+$$
+Next, we should visualize the boxplots for the body mass distribution by gender.
+
+```{r}
+```
+To perfrom the $t$-test, we use the `t.test()` function.
+
+```{r}
+```
