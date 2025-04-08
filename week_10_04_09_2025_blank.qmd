@@ -1,0 +1,68 @@
+---
+title: "CIS 351 Week 10 Monday 04/07/2025"
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+```
+
+## Analysis of Variance (ANOVA)
+
+ANOVA is a generalization of the $t$-test. It is used to determine whether three or more population means are different. Just like the $t$-test, there are different forms of the ANOVA. We will discuss the simplest of such---the **one-way ANOVA**.
+
+**Example 1.** Use ANOVA to determine whether there the length of flippers different between the three species of penguins.
+
+We first state our hypothesis. Let $\mu_A$, $\mu_C$, and $\mu_G$ to denote the mean flipper length of the Adelie, Chinstrap, and Gentoo penguins, respectively.
+
+* 
+* 
+
+Let us take a look at the distribution of flipper length by species.
+
+```{r}
+
+```
+
+The boxplot suggests that the mean flipper lengths are different by species. 
+
+There are two ways of performing ANOVA.
+*Method 1.* Using the `oneway.test()` function.
+
+```{r}
+
+```
+
+*Method 2.* Using `aov()` and `summary()` functions.
+
+```{r}
+
+```
+
+
+
+*Note.* If we reject the null hypothesis in an ANOVA, we can only conclude that at least one group is different from the others. We cannot conclude that all groups are different from each other.
+
+**Example 2.** From `storms` data, use ANOVA to determine whether there is a difference in pressure between different storm status.
+
+```{r}
+
+```
+
+*Method 1.*
+```{r}
+
+```
+
+*Method 2.*
+```{r}
+
+```
