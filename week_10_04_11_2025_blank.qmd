@@ -1,0 +1,34 @@
+---
+title: "CIS 351 Week 10 Friday 04/11/2025"
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+```
+
+## Chi-Square ($\chi^2$) Test of Independence
+
+The $\chi^2$ test is a statistical test to determine whether there is a relationship between two categorical variables.
+
+The null and alternative hypotheses of a $\chi^2$ test are.
+* $H_0:$ 
+* $H_A:$
+
+**Example 1.** From `penguins`, create a new variable `size`, which is defined by, if the body mass is greater than the mean body mass, then it is 'large'. If, on the other hand, a penguin's body mass is less than or equal to the mean body mass, then it is 'small'. Use the $\chi^2$ test to determine whether the variables `species` and `size` are dependent.
+
+```{r}
+```
+
+To perform the $\chi^2$ test in R, we use the `chisq.test()` function.
+
+```{r}
+```
