@@ -1,0 +1,80 @@
+---
+title: "CIS 351 Week 10 Friday 04/11/2025"
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+```
+
+## Chi-Square ($\chi^2$) Test of Independence
+
+The $\chi^2$ test is a statistical test to determine whether there is a relationship between two categorical variables.
+
+The null and alternative hypotheses of a $\chi^2$ test are.
+* $H_0:$ the two categorical variables are independent, i.e., there is no relationship between them.
+* $H_A:$ the two categorical variables are dependent, i.e., there is a relationship between them.
+
+**Example 1.** From `penguins`, create a new variable `size`, which is defined by, if the body mass is greater than the mean body mass, then it is 'large'. If, on the other hand, a penguin's body mass is less than or equal to the mean body mass, then it is 'small'. Use the $\chi^2$ test to determine whether the variables `species` and `size` are dependent.
+
+```{r}
+penguins_1 <- penguins |> 
+  filter(!is.na(body_mass_g)) |> 
+  mutate(
+    size = case_when(
+      body_mass_g > mean(body_mass_g) ~ 'large',
+      TRUE ~ 'small'
+    )
+  )
+
+penguins_1 |> 
+  ggplot(
+    aes(
+      x = species,
+      fill = size
+    )
+  ) +
+  geom_bar() +
+  theme_bw() +
+  labs(
+    x = 'Species',
+    y = 'Count'
+  )
+
+penguins_1 |> 
+  ggplot(
+    aes(
+      x = species,
+      fill = size
+    )
+  ) + 
+  geom_bar(position = 'fill') +
+  theme_bw() +
+  labs(
+    x = 'Species',
+    y = 'Count'
+  )
+```
+
+To perform the $\chi^2$ test in R, we use the `chisq.test()` function.
+
+```{r}
+test_1 <- chisq.test(
+  table(
+    penguins_1$species,
+    penguins_1$size
+  )
+)
+
+test_1
+```
+
+Since the $p$-value is $p < 2.2 \times 10^{-16} < 0.05$, we reject $H_0$ and conclude that `species` and `size` are dependent.
