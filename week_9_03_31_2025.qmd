@@ -1,0 +1,238 @@
+---
+title: "CIS 351 Week 9 Monday 03/31/2025"
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+
+library(ggpubr)
+```
+
+## Bar Plots with Error Bars
+
+**Example 1.** Create a bar plot of penguins' mean body mass by species with error bars.
+
+```{r}
+plot_1 <- penguins |> 
+  filter(!is.na(body_mass_g)) |> 
+  summarize(
+    mean_bm = mean(body_mass_g),
+    sd_bm = sd(body_mass_g),
+    .by = species
+  ) |> 
+  ggplot(
+    aes(
+      x = species,
+      y = mean_bm
+    )
+  ) + 
+  geom_bar(
+    stat = 'identity', 
+    fill = 'skyblue', 
+    color = 'blue'
+  ) +
+  geom_errorbar(
+    aes(
+      ymin = mean_bm - sd_bm,
+      ymax = mean_bm + sd_bm
+    ),
+    width = 0.4,
+    color = 'orange',
+    alpha = 0.9
+  ) 
+
+plot_1
+```
+
+## Interlude: Why Data Visualizations?
+
+Data visualizations serve a higher purpose than just pretty charts and diagrams. They provide deeper insights to our data that summary values do not tell us.
+
+### Problems with relying on summary values
+
+**Example 2.** Import the animals weights data using the snippet provided in the code chunk. Compute the mean weights of each group of animals, then plot the weights by group.
+
+```{r}
+#| message: false
+ 
+animals <- read.csv("https://raw.githubusercontent.com/ckaoxvii/CIS351/refs/heads/main/animal_weights.csv")
+
+weight_sum <- animals |> 
+  summarize(
+    mean_weight = round(mean(weight, na.rm = TRUE), 1),
+    .by = group
+  )
+
+weight_sum
+```
+
+```{r}
+plot_1 <- animals |> 
+  ggplot(
+    aes(
+      x = group,
+      y = weight
+    )
+  ) +
+  geom_jitter(
+    aes(color = group),
+    alpha = 0.5
+  ) + 
+  stat_summary(
+    geom = 'errorbar',
+    fun = mean,
+    fun.min = mean,
+    fun.max = mean,
+    width = 0.75,
+    color = 'red'
+  ) +
+  theme_bw()
+
+plot_1
+```
+
+The following is a more extreme example, but it hits harder on the importance of data visualization. Examine the data `datasaurus` from the course github page and find the mean and standard deviation of the $x$-and $y$-values for each group.
+
+```{r}
+#| message: false
+ 
+datasauras <- read_csv("https://raw.githubusercontent.com/ckaoxvii/CIS351/refs/heads/main/datasauras.csv")
+
+datasauras_x_sum <- datasauras |> 
+  summarize(
+    x_mean = round(mean(x, na.rm = TRUE), 2),
+    x_sd = round(sd(x, na.rm = TRUE), 2),
+    .by = group
+  )
+
+datasauras_x_sum
+```
+
+```{r}
+datasauras_y_sum <- datasauras |> 
+  summarize(
+    y_mean = round(mean(y, na.rm = TRUE), 2),
+    y_sd = round(sd(y, na.rm = TRUE), 2),
+    .by = group
+  )
+
+datasauras_y_sum
+```
+
+
+```{r datasets, fig.height=12, fig.width=9}
+plot_datasauras <- datasauras |> 
+  ggplot(
+    aes(
+      x = x,
+      y = y,
+      color = group
+    )
+  ) +
+  geom_point() +
+  theme_void() +
+  theme(legend.position = 'none') +
+  facet_wrap(~dataset, ncol = 3)
+
+plot_datasauras
+```
+
+## Scatter plots
+
+Scatter plots are typically used to illustrate relationship between two continuous variables.
+
+**Example 3.** Create a scatter plot of penguins flipper length vs body mass.
+
+```{r}
+plot_scatter <- penguins |> 
+  filter(
+    !is.na(flipper_length_mm),
+    !is.na(body_mass_g)
+  ) |> 
+  ggscatter(
+    x = 'flipper_length_mm',
+    y = 'body_mass_g',
+    add = 'reg.line',
+    add.params = list(
+      color = 'blue'
+    ) 
+  ) +
+  stat_cor(
+    label.x = 170,
+    label.y = 6000
+  ) +
+  stat_regline_equation(
+    label.x = 170,
+    label.y = 5500
+  )
+
+plot_scatter
+```
+
+**Example 4.** Repeat Example 3, except coloring the points by species.
+
+```{r}
+plot_scatter_2 <- penguins |> 
+  filter(
+    !is.na(flipper_length_mm),
+    !is.na(body_mass_g)
+  ) |> 
+  ggscatter(
+    x = 'flipper_length_mm',
+    y = 'body_mass_g',
+    color = 'species',
+    add = 'reg.line',
+    add.params = list(
+      color = 'black'
+    ),
+    alpha = 0.5
+  ) +
+  stat_cor(
+    label.x = 170,
+    label.y = 6000
+  ) +
+  stat_regline_equation(
+    label.x = 170,
+    label.y = 5500
+  )
+
+plot_scatter_2
+```
+
+**Example 5.** Create a grouped scatter plot, where each species has its own plot.
+
+```{r}
+plot_scatter_3 <- penguins |> 
+  filter(
+    !is.na(flipper_length_mm),
+    !is.na(body_mass_g)
+  ) |> 
+  ggscatter(
+    x = 'flipper_length_mm',
+    y = 'body_mass_g',
+    color = 'species',
+    add = 'reg.line',
+    add.params = list(
+      color = 'black'
+    ),
+    alpha = 0.5
+  ) +
+  facet_wrap(~species) +
+  stat_cor(
+    label.y = 6000
+  ) +
+  stat_regline_equation(
+    label.y = 5750
+  )
+
+plot_scatter_3
+```
