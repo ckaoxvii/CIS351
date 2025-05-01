@@ -1,0 +1,290 @@
+---
+title: "CIS 351 Sample Final Project"
+author: 'Anonymous'
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| message: false
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+
+library(ggpubr)
+
+library(tinytable)
+```
+
+## 1. Introduction
+
+We use the `penguins` data from `{palmerpenguins}` package for this sample project.
+
+## 2. Data Summaries
+
+We provide summary stats for the following numerical variables: `body_mass_g`, `flipper_len_mm`, and `bill_length_mm`. For categorical variables, we will use `species`, `island`, and `sex`.
+
+### 2.1. Summary Stats for `body_mass`
+
+```{r}
+penguins |> 
+  filter(!is.na(body_mass_g)) |> 
+  summarize(
+    min_bm = min(body_mass_g),
+    median_bm = median(body_mass_g),
+    mean_bm = round(mean(body_mass_g), 1),
+    max_bm = max(body_mass_g),
+    sd_bm = round(sd(body_mass_g),1)
+  ) |> 
+  tt()
+```
+
+### 2.2. Summary Stats for `flipper_length_mm`
+
+```{r}
+penguins |> 
+  filter(!is.na(flipper_length_mm)) |> 
+  summarize(
+    min_fl = min(flipper_length_mm),
+    median_fl = median(flipper_length_mm),
+    mean_fl = round(mean(flipper_length_mm)),
+    max_fl = max(flipper_length_mm),
+    sd_fl = round(sd(flipper_length_mm), 1)
+  ) |> 
+  tt()
+```
+
+### 2.3. Summary Stats for `bill_length_mm`
+
+
+```{r}
+penguins |> 
+  filter(!is.na(bill_length_mm)) |> 
+  summarize(
+    min_bl = min(bill_length_mm),
+    median_bl = median(bill_length_mm),
+    mean_bl = round(mean(bill_length_mm), 1),
+    max_bl = max(bill_length_mm),
+    sd_bl = round(sd(bill_length_mm), 1)
+  ) |> 
+  tt()
+```
+
+### 2.4. Summary for `species`
+
+```{r}
+penguins |> 
+  filter(!is.na(species)) |> 
+  summarize(
+    Count = n(),
+    .by = species
+  ) |> 
+  tt()
+```
+
+### 2.5. Summary for `island`
+
+```{r}
+penguins |> 
+  filter(!is.na(island)) |> 
+  summarize(
+    Count = n(),
+    .by = island
+  ) |> 
+  tt()
+```
+
+### 2.6. Summary for `sex`
+
+```{r}
+penguins |> 
+  filter(!is.na(sex)) |> 
+  summarize(
+    Count = n(),
+    .by = sex
+  ) |> 
+  tt()
+```
+
+## 3. Data Visualizations
+
+### 3.1. Scatter Plot of `body_mass_g` vs `flipper_length_mm`
+
+```{r}
+penguins |> 
+  filter(!is.na(body_mass_g) & !is.na(flipper_length_mm)) |> 
+  ggscatter(
+    x = 'body_mass_g',
+    y = 'flipper_length_mm',
+    add = 'reg.line',
+    add.params = list(
+      color = 'blue'
+    )  
+  ) +
+  stat_cor(
+    label.x = 3000,
+    label.y = 225
+  ) +
+  stat_regline_equation(
+    label.x = 3000,
+    label.y = 230
+  ) +
+  labs(
+    title = 'Scatter Plot of Body Mass vs Flipper Length',
+    x = 'Body Mass (g)',
+    y = 'Flipper Length (mm)'
+  )
+```
+
+### 3.2. Box Plot of `body_mass_g` by `species`
+
+```{r}
+penguins |> 
+  filter(!is.na(body_mass_g) & !is.na(species)) |> 
+  ggplot(
+    aes(
+      x = species,
+      y = body_mass_g,
+      fill = species
+    )
+  ) +
+  geom_boxplot() +
+  theme_bw() +
+  scale_fill_brewer(palette = 'Dark2') +
+  stat_summary(
+    fun = mean,
+    fun.min = mean,
+    fun.max = mean,
+    geom = 'errorbar',
+    color = 'red',
+    width = 0.75,
+    linewidth = 1.25,
+    alpha = 0.5
+  ) +
+  labs(
+    title = 'Plot of Body Mass by Species',
+    x = 'Species',
+    y = 'Body Mass (g)'
+  ) +
+  theme(legend.position = 'none')
+```
+
+### 3.3. Stacked Bar Chart of `sex` and `size`
+
+We define the categorical variable `size` by
+
+* `size` is large if `body_mass_g` of an individual penguin is greater than or equal to the mean body mass of all penguins.
+* `size` is small if `body_mass_g` of an individual penguin is less than the mean body mass of all penguins.
+
+```{r}
+penguins |> 
+  filter(!is.na(body_mass_g) & !is.na(sex)) |> 
+  mutate(
+    size = case_when(
+      body_mass_g >= mean(body_mass_g) ~ 'large',
+      TRUE ~ 'small'
+    )
+  ) |> 
+  ggplot(
+    aes(
+      x = sex,
+      fill = size
+    )
+  ) +
+  geom_bar(color = 'black') +
+  scale_fill_brewer(palette = 'Dark2') +
+  theme_bw() +
+  labs(
+    title = 'Stacked Bar Chart of Gender and Size',
+    x = 'Gender',
+    y = 'Size'
+  )
+```
+
+```{r}
+penguins |> 
+  filter(!is.na(body_mass_g) & !is.na(sex)) |> 
+  mutate(
+    size = case_when(
+      body_mass_g >= mean(body_mass_g) ~ 'large',
+      TRUE ~ 'small'
+    )
+  ) |> 
+  ggplot(
+    aes(
+      x = sex,
+      fill = size
+    )
+  ) +
+  geom_bar(
+    position = 'fill',
+    color = 'black'
+  ) +
+  scale_fill_brewer(palette = 'Dark2') +
+  theme_bw() +
+  labs(
+    title = 'Percent Stacked Bar Chart of Gender and Size',
+    x = 'Gender',
+    y = 'Size'
+  )
+```
+
+## 4. Statistical Tests
+
+### 4.1. ANOVA on `body_mass_g` by `species`
+
+From Section 3.2, we observe that the dataset includes more than two species of penguins. Therefore, we proceed with an ANOVA to determine whether there are significant differences in mean body mass among the species.
+
+Let $\mu_A$, $\mu_C$, and $\mu_G$ denote the mean body masses of Adelie, Chinstrap, and Gentoo penguins, respectively. The hypotheses are as follows:
+
+* $H_0$: $\mu_A = \mu_C = \mu_G$ 
+* $H_A$: At least one species has a mean body mass that differs from the others
+
+```{r}
+oneway.test(
+  body_mass_g ~ species,
+  data = penguins,
+  var.equal = TRUE
+)
+```
+
+Since the $p$-value is $p < 2.2 \times 10^{-16} < 0.05$, we reject $H_0$ and conclude that at least one species has a mean body mass that differs from others.
+
+### 4.2. $\chi^2$-Test of Independence on `sex` and `size`.
+
+We first define a new categorical variable `size` based on the numerical variable `body_mass_g`.
+
+```{r}
+penguins <- penguins |> 
+  filter(!is.na(body_mass_g) & !is.na(sex)) |> 
+  mutate(
+    size = case_when(
+      body_mass_g >= mean(body_mass_g) ~ 'large',
+      TRUE ~ 'small'
+    )
+  )
+```
+
+The hypotheses are
+
+* $H_0$: `sex` and `size` are independent variables
+* $H_A$: `sex` and `size` are dependent variables
+
+```{r}
+chisq.test(
+  table(
+    penguins$sex,
+    penguins$size
+  )
+)
+```
+
+Since the $p$-value is $p = 4.998 \times 10^{-5} < 0.05$, we reject $H_0$ and conclude that the variables `sex` and `size` are dependent.
+
+## 5. Conclusion
+
+Write your own conclusion about this project.

@@ -1,0 +1,496 @@
+---
+title: "Analyses of the `{palmerpenguins}` Data"
+subtitle: "CIS 351 Sample Final Project"
+author: "Anonymous"
+format: 
+  revealjs:
+    incremental: true
+---
+
+```{r}
+#| echo: false
+
+library(tidyverse)
+
+library(janitor)
+
+library(palmerpenguins)
+
+library(ggpubr)
+
+library(tinytable)
+```
+
+## 1. Introduction
+
+Tell me something about your data.
+
+## 2. Summary Stats
+
+We examine the following numerical and categorical variables.
+
+* **Numerical variables**: `body_mass_g`, `flipper_length_mm`, `bill_length_mm`
+* **Categorical variables**: `species`, `island`, `sex`
+
+**Note:** The histograms and bar charts included in this section are optional.
+
+---
+
+### 2.1. `body_mass_g`
+
+```{r}
+#| echo: false 
+
+penguins |> 
+  filter(!is.na(body_mass_g)) |> 
+  summarize(
+    min_bm = min(body_mass_g),
+    median_bm = median(body_mass_g),
+    mean_bm = round(mean(body_mass_g), 1),
+    max_bm = max(body_mass_g),
+    sd_bm = round(sd(body_mass_g),1)
+  ) |> 
+  tt()
+```
+
+```{r}
+#| echo: false
+
+penguins |> 
+  filter(!is.na(body_mass_g)) |> 
+  ggplot(
+    aes(
+      x = body_mass_g
+    )
+  ) +
+  geom_histogram(
+    fill = 'skyblue',
+    color = 'blue'
+  ) + 
+  theme_bw() +
+  labs(
+    title = 'Distribution of Bill Length',
+    x = 'Bill Length (mm)',
+    y = 'Count'
+  )
+```
+
+---
+
+### 2.2. `flipper_length_mm` 
+
+```{r}
+penguins |> 
+  filter(!is.na(flipper_length_mm)) |> 
+  summarize(
+    min_fl = min(flipper_length_mm),
+    median_fl = median(flipper_length_mm),
+    mean_fl = round(mean(flipper_length_mm)),
+    max_fl = max(flipper_length_mm),
+    sd_fl = round(sd(flipper_length_mm), 1)
+  ) |> 
+  tt()
+
+penguins |> 
+  filter(!is.na(flipper_length_mm)) |> 
+  ggplot(
+    aes(
+      x = flipper_length_mm
+    )
+  ) +
+  geom_histogram(
+    fill = 'skyblue',
+    color = 'blue'
+  ) + 
+  theme_bw() +
+  labs(
+    title = 'Distribution of Flipper Length',
+    x = 'Flipper Length (mm)',
+    y = 'Count'
+  )
+```
+
+---
+
+### 2.3. `bill_length_mm`
+
+```{r}
+penguins |> 
+  filter(!is.na(bill_length_mm)) |> 
+  summarize(
+    min_bl = min(bill_length_mm),
+    median_bl = median(bill_length_mm),
+    mean_bl = round(mean(bill_length_mm), 1),
+    max_bl = max(bill_length_mm),
+    sd_bl = round(sd(bill_length_mm), 1)
+  ) |> 
+  tt()
+
+penguins |> 
+  filter(!is.na(bill_length_mm)) |> 
+  ggplot(
+    aes(
+      x = bill_length_mm
+    )
+  ) +
+  geom_histogram(
+    fill = 'skyblue',
+    color = 'blue'
+  ) + 
+  theme_bw() +
+  labs(
+    title = 'Distribution of Bill Length',
+    x = 'Bill Length (mm)',
+    y = 'Count'
+  )
+```
+
+---
+
+### 2.4. `species`
+
+:::: {.columns}
+
+::: {.column width="40%"}
+```{r}
+#| echo: false
+
+penguins |> 
+  filter(!is.na(species)) |> 
+  summarize(
+    Count = n(),
+    .by = species
+  ) |> 
+  arrange(species) |> 
+  tt()
+```
+:::
+
+::: {.column width="60%"}
+```{r}
+#| echo: false
+
+penguins |> 
+  filter(!is.na(species)) |> 
+  ggplot(
+    aes(
+      x = species,
+      fill = species
+    )
+  ) +
+  geom_bar() +
+  scale_fill_brewer(palette = 'Dark2') +
+  theme_bw() +
+  labs(
+    title = 'Count by Species',
+    x = 'Species',
+    y = 'Count'
+  )
+```
+:::
+
+::::
+
+---
+
+### 2.5. `island`
+
+:::: {.columns}
+
+::: {.column width="40%"}
+```{r}
+#| echo: false
+
+penguins |> 
+  filter(!is.na(island)) |> 
+  summarize(
+    Count = n(),
+    .by = island
+  ) |>
+  arrange(island) |> 
+  tt()
+```
+:::
+
+::: {.column width="60%"}
+```{r}
+#| echo: false
+
+penguins |> 
+  filter(!is.na(island)) |> 
+  ggplot(
+    aes(
+      x = island,
+      fill = island
+    )
+  ) +
+  geom_bar() +
+  theme_bw() +
+  scale_fill_brewer(palette = 'Dark2') +
+  labs(
+    title = 'Count by Island',
+    x = 'Island',
+    y = 'Count'
+  )
+```
+:::
+
+::::
+
+---
+
+### 2.6. `sex`
+
+:::: {.columns}
+
+::: {.column width="40%"}
+```{r}
+#| echo: false
+
+penguins |> 
+  filter(!is.na(sex)) |> 
+  summarize(
+    Count = n(),
+    .by = sex
+  ) |> 
+  arrange(sex) |> 
+  tt()
+```
+:::
+
+::: {.column width="60%"}
+```{r}
+#| echo: false
+
+penguins |> 
+  filter(!is.na(sex)) |> 
+  ggplot(
+    aes(
+      x = sex,
+      fill = sex
+    )
+  ) +
+  geom_bar() +
+  scale_fill_brewer(palette = 'Dark2') +
+  theme_bw() +
+  labs(
+    title = 'Count by Gender',
+    x = 'Gender',
+    y = 'Count'
+  )
+```
+:::
+
+::::
+
+## 3. Data Visualizations
+
+We will explore the relationships among the features of the `penguins` using the following visualizations.
+
+* A scatter plot of `body_mass_g` and `flipper_length_mm`
+* A boxplot of `body_mass_g` by `species`
+* A stacked bar chart of `sex` and `size`
+
+---
+
+### 3.1. Body Mass vs Flipper Length
+
+```{r}
+#| echo: false
+
+penguins |> 
+  filter(!is.na(body_mass_g) & !is.na(flipper_length_mm)) |> 
+  ggscatter(
+    x = 'body_mass_g',
+    y = 'flipper_length_mm',
+    add = 'reg.line',
+    add.params = list(
+      color = 'blue'
+    )  
+  ) +
+  stat_cor(
+    label.x = 3000,
+    label.y = 225
+  ) +
+  stat_regline_equation(
+    label.x = 3000,
+    label.y = 230
+  ) +
+  labs(
+    title = 'Scatter Plot of Body Mass vs Flipper Length',
+    x = 'Body Mass (g)',
+    y = 'Flipper Length (mm)'
+  )
+```
+
+---
+
+### 3.2. Body Mass by Species
+
+```{r}
+#| echo: false
+
+penguins |> 
+  filter(!is.na(body_mass_g) & !is.na(species)) |> 
+  ggplot(
+    aes(
+      x = species,
+      y = body_mass_g,
+      fill = species
+    )
+  ) +
+  geom_boxplot() +
+  theme_bw() +
+  scale_fill_brewer(palette = 'Dark2') +
+  stat_summary(
+    fun = mean,
+    fun.min = mean,
+    fun.max = mean,
+    geom = 'errorbar',
+    color = 'red',
+    width = 0.75,
+    linewidth = 1.25,
+    alpha = 0.5
+  ) +
+  labs(
+    title = 'Plot of Body Mass by Species',
+    x = 'Species',
+    y = 'Body Mass (g)'
+  ) +
+  theme(legend.position = 'none')
+```
+
+---
+
+### 3.3. Gender vs Size (Count)
+
+```{r}
+#| echo: false
+
+penguins |> 
+  filter(!is.na(body_mass_g) & !is.na(sex)) |> 
+  mutate(
+    size = case_when(
+      body_mass_g >= mean(body_mass_g) ~ 'large',
+      TRUE ~ 'small'
+    )
+  ) |> 
+  ggplot(
+    aes(
+      x = sex,
+      fill = size
+    )
+  ) +
+  geom_bar(color = 'black') +
+  scale_fill_brewer(palette = 'Dark2') +
+  theme_bw() +
+  labs(
+    title = 'Stacked Bar Chart of Gender and Size',
+    x = 'Gender',
+    y = 'Size'
+  )
+```
+
+---
+
+### 3.3. Gender vs Size (Proportion)
+
+```{r}
+#| echo: false
+
+penguins |> 
+filter(!is.na(body_mass_g) & !is.na(sex)) |> 
+  mutate(
+    size = case_when(
+      body_mass_g >= mean(body_mass_g) ~ 'large',
+      TRUE ~ 'small'
+    )
+  ) |> 
+  ggplot(
+    aes(
+      x = sex,
+      fill = size
+    )
+  ) +
+  geom_bar(
+    color = 'black',
+    position = 'fill'
+  ) +
+  scale_fill_brewer(palette = 'Dark2') +
+  theme_bw() +
+  labs(
+    title = 'Stacked Bar Chart of Gender and Size',
+    x = 'Gender',
+    y = 'Size'
+  )
+```
+
+## 4. Hypotheses Tests
+
+### 4.1. ANOVA on `body_mass_g` by `species`
+
+The hypotheses are
+
+* $H_0$: the mean body mass are the same across all species
+* $H_A$: at least one species has a mean body mass that differs from the others
+
+---
+
+### 4.1. ANOVA on `body_mass_g` by `species`
+```{r}
+#| echo: false
+
+oneway.test(
+  body_mass_g ~ species,
+  data = penguins,
+  var.equal = TRUE
+)
+```
+
+Since the $p$-value is $p < 2.2 \times 10^{-16} < 0.05$, we reject $H_0$ and conclude that at least one species has a mean body mass that differs from others.
+
+---
+
+### 4.2. $\chi^2$-Test of Independence on `sex` and `size`
+
+We define a new categorical `size` based on `body_mass_g`. 
+
+* `size` is *large* if `body_mass_g` is greater than or equal to the mean `body_mass_g`.
+* `size` is *small* if `body_mass_g` is less than the mean `body_mass_g`.
+
+--- 
+
+### 4.2. $\chi^2$-Test of Independence on `sex` and `size`
+
+The hypotheses of the $\chi^2$-test are
+
+* $H_0$: `sex` and `size` are independent variables
+* $H_A$: `sex` and `size` are dependent variables
+
+---
+
+### 4.2. $\chi^2$-Test of Independence on `sex` and `size`
+
+```{r}
+penguins <- penguins |> 
+  filter(!is.na(body_mass_g) & !is.na(sex)) |> 
+  mutate(
+    size = case_when(
+      body_mass_g >= mean(body_mass_g) ~ 'large',
+      TRUE ~ 'small'
+    )
+  )
+
+chisq.test(
+  table(
+    penguins$sex,
+    penguins$size
+  )
+)
+```
+
+Since the $p$-value is $p = 4.998 \times 10^{-5} < 0.05$, we reject $H_0$ and conclude that the variables `sex` and `size` are dependent.
+
+## 5. Conclusion
+
+Tell me what you have learned about your data.
