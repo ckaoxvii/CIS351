@@ -5,7 +5,7 @@ format:
     embed-resources: true
 ---
 
-You can find the corresponding section of the textbook [here](%22https://ckao.quarto.pub/cis-351/content/data_types.html%22).
+You can find the corresponding section of the textbook [here](https://ckao.quarto.pub/cis-351/content/data_types.html).
 
 ## Common Data Types in R {#sec-data-types}
 
