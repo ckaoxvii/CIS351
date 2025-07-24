@@ -1,0 +1,115 @@
+---
+title: "Data Types"
+format: 
+  html:
+    embed-resources: true
+---
+
+## Common Data Types in R {#sec-data-types}
+
+So far, we have used R as a calculator. This means we have only worked with real numbers as our data type up to this point. However, R supports other data types as well. In this course, we will cover the four most commonly used data types:
+
+1.  Numeric: These are typical real numbers, such as 1, 0.5, 1/3, $\pi$, etc.
+2.  Character: A string of characters, which can include letters, numbers, or symbols. Examples: `"Flagler College"`, `"CIS 351"`, `"t-test"`.
+3.  Logical (Boolean): Represents `TRUE` or `FALSE`.
+4.  `NA` value.
+
+If you are unsure which type of data you are working with, you can use the `class()` function to determine the data type of a value or variable. 
+
+### Numeric Values
+
+As mentioned above, numeric values are the typical real numbers that we work with.
+
+**Example 1.** Use `class()` to determine the data type of the values `1.3`, `-3`, `2.718e10`, and `log(10)`.
+```{r}
+```
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+The `class()` function can also be used on values stored in a variable.
+
+**Example 2.** Define `v` to be $\log(\cos(\pi/3))$. Calculate the value of `v` and determine its data type.
+
+```{r}
+```
+
+You will note that R does not produce any output when the input is a variable assignment operation. This is why you only see two outputs from the code chunk above: one for the value of `v`, and one for its data type. The assignment itself (`v <- log(cos(pi/3)))`) does not generate visible output.
+
+### Character Values
+
+Broadly speaking, any value that is not numeric or logical can be considered a character value in R. That said, there are specific types of character values--such as factors and dates--but we will save that discussion for another day. One important syntax for characters is that **character values are wrapped around by a set of single (`''`) or double (`""`) quotation marks.**
+
+**Example 3.** Determine the data type of `"gopher tortoise"`, `"I am not a morning person."`, and `'Monday'`.
+
+```{r}
+```
+
+```{r}
+```
+
+```{r}
+```
+
+What if we pass a string of characters through `class()` without the quotation marks?
+
+```{r}
+```
+
+We get an error message: `unexpected symbol in "class(gopher tortoise"`. The `unexpected symbol` message is R's way of indicating that there is a syntax error in your code. In this case, the syntax error occurs because the string `gopher tortoise` is not enclosed by quotation marks.
+
+**Example 4.** Assign the character string `"I love R."` to the variable `ilr`. View the variable and use `class()` to determine the data value.
+
+```{r}
+```
+
+*Remarks:*
+
+1. If you enclose a numeric value in quotation marks, you then convert it to a character data type. This is particularly useful when working with dates, such as years, months, or weekdays.
+
+```{r}
+```
+
+2. We cannot perform a mathematical operation with a character value. 
+
+```{r}
+```
+
+### Logical Values
+
+In R, logical values (`TRUE` or `FALSE`---note the all caps) are incredibly useful in data manipulation, particularly when filtering or evaluating conditions. Although they can be abbreviated with `T` and `F`, we will always use the full words for clarity and to avoid confusion.
+
+```{r}
+```
+
+Similar to other data types, we can assign logical values to variables as well--frivolous as it may sound.
+
+```{r}
+```
+
+Internally, R treats the logical values as specific numeric values: `TRUE` is equivalent to 1 and `FALSE` is equivalent to 0. This behavior enables a wide range of practical applications for logical values, particularly in arithmetic operations and condition-based filtering.
+
+
+```{r}
+```
+
+```{r}
+```
+
+### `NA` Value
+
+`NA` stands for "not available". It is R's way of working with missing values in a data frame. Similar to the logical values, `NA` must be in all caps.
+
+```{r}
+```
+
+
+```{r}
+```
+
+In R, it is important to be mindful of `NA` values in data frames as they can lead to some nonsensical or invalid calculations. In a later section, we will explore how to work with data frames that contain `NA`s. 
